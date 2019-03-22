@@ -1,0 +1,20 @@
+{
+  "name": "desk-search",
+  "version": "1.0.0",
+  "description": "(A way to keep track of employee's desk in-order to simplyfy the search when that employee has a package to deliver.)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robel Birkneh",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.5",
+    "body-parser": "^1.18.3",
+    "db": "^1.1.1",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10",
+    "passport": "^0.4.0",
+    "sequelize": "^5.1.0"
+  }
+}
