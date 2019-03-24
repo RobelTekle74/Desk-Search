@@ -1,7 +1,7 @@
 {
   "name": "desk-search",
   "version": "1.0.0",
-  "description": "(A way to keep track of employee's desk in-order to simplyfy the search when that employee has a package to deliver.)",
+  "description": "(A way to keep track of employee's desk in-order to simplyfy the search when that employee has a package to be delivered.)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,12 @@
     "express": "^4.16.4",
     "nodemon": "^1.18.10",
     "passport": "^0.4.0",
+    "postgresql": "0.0.1",
+    "react-bootstrap": "^1.0.0-beta.6",
+    "react-dom": "^16.8.4",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
     "sequelize": "^5.1.0"
   }
 }
