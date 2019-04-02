@@ -9,20 +9,14 @@ var passport = require('../../Middleware/passport');
 // User Model
 const User = require('../../Models/User');
 
-router.get('/', (req, res) => {
-    User.find()
-      .sort({ date: -1 })
-      .then(users => res.json(users));
-  });
-
 // @route   POST api/users
 // @desc    Register new user
 // @access  Public
 router.post('/', (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  const { name, email, password,  } = req.body;
 
   // Simple validation
-  if(!name || !email || !password || !password2) {
+  if(!name || !email || !password ) {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
