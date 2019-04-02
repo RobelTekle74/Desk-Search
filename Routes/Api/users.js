@@ -1,51 +1,79 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const config = require('config');
-const jwt = require('jsonwebtoken');
-var passport = require('../../Middleware/passport');
+const passport = require('passport');
+const local = require('passport-local')
 
-
-// User Model
+//User model
 const User = require('../../Models/User');
 
-// @route   POST api/users
-// @desc    Register new user
-// @access  Public
-router.post('/', (req, res) => {
-  const { name, email, password,  } = req.body;
 
-  // Simple validation
-  if(!name || !email || !password ) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
-  }
 
-//   Check for existing user
-  User.findOne({ email })
-    .then(user => {
-      if(user) return res.status(400).json({ msg: 'User already exists' });
+//Register Handle
+router.post('/register', (req, res) => {
+    console.log('imateapot')
+    const { name, email, password, password2 } = req.body;
+    let errors = [];
+    console.log(req.body);
+    //Check required fields
+    if (!name || !email || !password || !password2) {
+        errors.push({ msg: 'Please fill in all fields' });
+    }
+    
+    //Check that passwords match
+    if (password !== password2) {
+        errors.push({ msg: 'Passwords do not match' });
+    }
 
-      const newUser = new User({
-        name,
-        email,
-        password,
-        password2
-      });
-
-      // Create salt & hash
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
+    if(errors.length > 0) {
+        res.json({errors});
+        console.log(errors);
+        
+    } else {
+        //Validation Passed
+        User.findOne({ email: email })
             .then(user => {
-              res.redirect('/login');
+                if (user) {
+                    errors.push({ msg: 'Email is already registered.'})
+                    res.json(errors)
+                    console.log(errors)
+                } else {
+                    const newUser = new User({
+                        name,
+                        email,
+                        password
+                    });
+
+                    //Hash password
+                    bcrypt.genSalt(10, (err, salt) => 
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            //Set password to hashed
+                            newUser.password = hash;
+                            //Save user
+                            newUser.save()
+                                .then(user => {
+                                    console.log('success')
+                                    res.json({user});
+                                })
+                                .catch()
+                    }))
+                }
             })
-            .catch(err => console.log(err));
-        });
-      })
-    });
+    }
+})
+
+//Login handle
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.json({user: req.user});
 });
- 
- module.exports = router;
+
+//Logout handle
+router.post('/logout', function (req, res, next) {
+    req.logout();
+    res.json({ status: 'OK' });
+});
+
+module.exports = router
