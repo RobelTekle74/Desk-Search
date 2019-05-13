@@ -21,8 +21,8 @@ app.use(passport.session());
 
 //Mongoose and MongoDB
 const mongoose = require('mongoose');
-const db = require('./Config/keys').mongoURI;
-mongoose.connect(db, { useNewUrlParser: true })
+const db = require('./Config/keys').MongoURI;
+mongoose.connect(db,{ useNewUrlParser: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
