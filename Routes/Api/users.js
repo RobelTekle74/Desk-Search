@@ -10,7 +10,7 @@ const User = require('../../Models/User');
 
 
 //Register Handle
-router.post('/register', (req, res) => {
+router.post('/users/register', (req, res) => {
     console.log('imateapot')
     const { name, email, password, password2 } = req.body;
     let errors = [];
@@ -64,7 +64,7 @@ router.post('/register', (req, res) => {
 })
 
 //Login handle
-router.post('/login', 
+router.post('/users/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.json({user: req.user});
