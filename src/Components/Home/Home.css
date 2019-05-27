@@ -1,0 +1,13 @@
+.container {
+    background-color: #CBC796;
+    height: 100%;
+    width: auto;
+}
+
+.letsgo{
+    background-color: #A29C67;
+    text-decoration: none;
+}
+    .letsgo a {
+        text-decoration: none;
+    }
